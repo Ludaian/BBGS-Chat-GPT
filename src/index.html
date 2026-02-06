@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BBGS - Block Blast Solver Skeleton</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div class="logo">BBGS</div>
+        <nav class="nav">
+          <a href="#solve">Solve</a>
+          <a href="#presets">Presets</a>
+          <a href="#analytics">Analytics</a>
+          <a href="#roadmap">Roadmap</a>
+          <button class="button ghost">Đăng nhập</button>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Block Blast Game Solver</p>
+          <h1>Khung xương website hỗ trợ giải Block Blast</h1>
+          <p class="sub">
+            Kiến trúc rõ ràng, tách biệt UI/solver/data. Trải nghiệm giải nhanh, replay mượt,
+            hỗ trợ hint, phân tích chiến lược và lưu preset.
+          </p>
+          <div class="hero-actions">
+            <button class="button">Bắt đầu giải</button>
+            <button class="button ghost">Xem tài liệu API</button>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h3>System Snapshot</h3>
+          <ul>
+            <li>Frontend: React + Canvas/WebGL</li>
+            <li>Backend: Node.js API Gateway</li>
+            <li>Solver: Python (FastAPI)</li>
+            <li>Storage: Postgres + Redis + S3</li>
+          </ul>
+        </div>
+      </section>
+
+      <main>
+        <section id="solve" class="panel-grid">
+          <div class="panel board-panel">
+            <div class="panel-header">
+              <h2>Game Board</h2>
+              <div class="chip">Canvas / WebGL</div>
+            </div>
+            <div class="board-skeleton">
+              <div class="grid">
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+              </div>
+              <p class="hint">Kéo thả khối hoặc upload ảnh để nhập trạng thái.</p>
+            </div>
+            <div class="control-row">
+              <button class="button">Import ảnh</button>
+              <button class="button ghost">Nhập tay</button>
+              <button class="button ghost">Preset mẫu</button>
+            </div>
+          </div>
+
+          <div class="panel solver-panel">
+            <div class="panel-header">
+              <h2>Solver Panel</h2>
+              <div class="chip">Hint Mode</div>
+            </div>
+            <div class="solver-options">
+              <label>
+                Chiến lược
+                <select>
+                  <option>Greedy</option>
+                  <option>A*</option>
+                  <option>Beam Search</option>
+                  <option>IDA*</option>
+                  <option>Genetic</option>
+                </select>
+              </label>
+              <label>
+                Max steps
+                <input type="number" value="5000" />
+              </label>
+              <label>
+                Độ sâu hint
+                <input type="range" min="1" max="10" value="3" />
+              </label>
+            </div>
+            <div class="control-row">
+              <button class="button">Solve</button>
+              <button class="button ghost">Hint</button>
+              <button class="button ghost">So sánh chiến lược</button>
+            </div>
+            <div class="metrics">
+              <div>
+                <p>TTF</p>
+                <strong>~120ms</strong>
+              </div>
+              <div>
+                <p>Độ tối ưu</p>
+                <strong>92%</strong>
+              </div>
+              <div>
+                <p>Moves</p>
+                <strong>14</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel replay" aria-label="Replay controls">
+          <div class="panel-header">
+            <h2>Replay & Animation</h2>
+            <div class="chip">Playback</div>
+          </div>
+          <div class="replay-controls">
+            <button class="button ghost">◀</button>
+            <button class="button">Play</button>
+            <button class="button ghost">▶</button>
+            <div class="slider">
+              <span>Speed</span>
+              <input type="range" min="1" max="5" value="3" />
+            </div>
+          </div>
+          <div class="log-panel">
+            <p class="log-title">Logs / Metrics</p>
+            <ul>
+              <li>Move #1: đặt khối L, clear 1 line</li>
+              <li>Move #2: rotate + drop, combo x2</li>
+              <li>Move #3: hint - ưu tiên clear trung tâm</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="presets" class="panel-grid">
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Presets & Share</h2>
+              <div class="chip">Storage</div>
+            </div>
+            <div class="preset-list">
+              <div class="preset">
+                <h3>Daily Challenge #12</h3>
+                <p>Saved · 4 moves remaining</p>
+              </div>
+              <div class="preset">
+                <h3>My Favorite Setup</h3>
+                <p>Shared link · 2 days ago</p>
+              </div>
+            </div>
+            <div class="control-row">
+              <button class="button">Lưu preset</button>
+              <button class="button ghost">Chia sẻ link</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <h2>API Quick View</h2>
+              <div class="chip">REST</div>
+            </div>
+            <pre class="code">
+POST /api/v1/solve
+{ board, strategy, max_steps }
+
+GET /api/v1/solve/{job_id}
+
+POST /api/v1/preset
+GET /api/v1/presets?user=...
+            </pre>
+          </div>
+        </section>
+
+        <section id="analytics" class="panel">
+          <div class="panel-header">
+            <h2>Analytics & KPIs</h2>
+            <div class="chip">Observability</div>
+          </div>
+          <div class="kpi-grid">
+            <div>
+              <p>TTF trung bình</p>
+              <strong>&lt; 300ms</strong>
+            </div>
+            <div>
+              <p>Success rate</p>
+              <strong>&gt; 95%</strong>
+            </div>
+            <div>
+              <p>P95 latency</p>
+              <strong>&lt; 1s</strong>
+            </div>
+            <div>
+              <p>Retention 14 ngày</p>
+              <strong>35%</strong>
+            </div>
+          </div>
+        </section>
+
+        <section id="roadmap" class="panel">
+          <div class="panel-header">
+            <h2>Roadmap triển khai</h2>
+            <div class="chip">Sprints</div>
+          </div>
+          <ol class="roadmap">
+            <li><strong>Sprint 0:</strong> Product spec, wireframe, setup CI/CD.</li>
+            <li><strong>Sprint 1:</strong> Frontend skeleton + backend API stub.</li>
+            <li><strong>Sprint 2:</strong> Solver naive + replay cơ bản.</li>
+            <li><strong>Sprint 3:</strong> A*/Beam + cache + queue.</li>
+            <li><strong>Sprint 4:</strong> Presets + auth + share link.</li>
+            <li><strong>Sprint 5:</strong> Perf tuning, analytics, tests.</li>
+            <li><strong>Sprint 6:</strong> Polish UI/UX, a11y, deploy.</li>
+          </ol>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div>
+          <h3>BBGS Skeleton</h3>
+          <p>Thiết kế khung xương cho website hỗ trợ giải Block Blast.</p>
+        </div>
+        <div>
+          <p>Documentation</p>
+          <ul>
+            <li>OpenAPI Spec</li>
+            <li>Architecture Diagram</li>
+            <li>Benchmark Suite</li>
+          </ul>
+        </div>
+        <div>
+          <p>Contact</p>
+          <ul>
+            <li>hello@bbgs.dev</li>
+            <li>Discord / Slack</li>
+          </ul>
+        </div>
+      </footer>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
